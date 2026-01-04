@@ -1,1 +1,1 @@
-# wordpress-plugin-wp-launchpad
+# npm-package-create-wp-site
