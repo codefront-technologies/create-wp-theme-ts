@@ -19,7 +19,7 @@
     "generator",
     "cli"
   ],
-  "author": "Evan Ellison",
+  "author": "Codefront Technologies LLC",
   "license": "MIT",
   "files": [
     "bin",
@@ -27,7 +27,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/create-wp-react-site.git"
+    "url": "https://github.com/codefront-technologies/create-wp-theme-ts"
   },
   "engines": {
     "node": ">=16.0.0"
