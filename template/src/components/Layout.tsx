@@ -27,7 +27,7 @@ const Logo = styled(Link)`
   font-weight: bold;
   color: white;
   text-decoration: none;
-  
+
   &:hover {
     color: #4a9eff;
   }
@@ -44,7 +44,7 @@ const NavLink = styled(Link)`
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
-  
+
   &:hover {
     color: #4a9eff;
   }
@@ -73,11 +73,11 @@ function Layout() {
           </NavLinks>
         </Nav>
       </Header>
-      
+
       <Main>
         <Outlet />
       </Main>
-      
+
       <Footer>
         <p>&copy; {new Date().getFullYear()} My Site. All rights reserved.</p>
       </Footer>
