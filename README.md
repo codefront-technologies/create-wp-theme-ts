@@ -1,4 +1,4 @@
-# create-wp-theme-ts
+# Create WP Theme TS
 
 A CLI tool to scaffold a custom WordPress theme powered by React, TypeScript, and Vite.
 
@@ -243,14 +243,6 @@ register_nav_menus(array(
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Testing
-
-Navigate to desired location for the created project and run the following command.
-
-```
-node "create-wp-theme-ts\bin\index.js" <name-of-template-folder>
-```
 
 ## License
 
