@@ -24,11 +24,16 @@ export default defineConfig(({ mode }) => {
 
       // Copy static files to dist
       // - PHP files for WordPress theme
+      // - WordPress theme style.css (with required header)
       // - Images from public folder
       viteStaticCopy({
         targets: [
           {
             src: 'php/*',
+            dest: '',
+          },
+          {
+            src: 'public/style.css',
             dest: '',
           },
           {
@@ -66,12 +71,13 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           // Fixed filenames for WordPress compatibility (no hashes)
-          // WordPress functions.php expects bundle.js and style.css
+          // WordPress functions.php expects bundle.js and bundle.css
+          // style.css is reserved for WordPress theme header
           entryFileNames: 'bundle.js',
           chunkFileNames: '[name].js',
           assetFileNames: (assetInfo) => {
             if (assetInfo.name?.endsWith('.css')) {
-              return 'style.css';
+              return 'bundle.css';
             }
             return 'assets/[name][extname]';
           },

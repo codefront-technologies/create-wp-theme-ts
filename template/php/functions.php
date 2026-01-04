@@ -5,8 +5,8 @@
 
 // Enqueue styles and scripts
 function theme_enqueue_scripts() {
-    // Enqueue the main stylesheet
-    wp_enqueue_style('react-app', get_template_directory_uri() . '/style.css', array(), '1.0.0');
+    // Enqueue the bundled CSS from Vite build
+    wp_enqueue_style('react-app', get_template_directory_uri() . '/bundle.css', array(), '1.0.0');
     
     // Enqueue the React bundle
     wp_enqueue_script('react-app', get_template_directory_uri() . '/bundle.js', array(), '1.0.0', true);
