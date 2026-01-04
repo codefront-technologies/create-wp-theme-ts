@@ -1,0 +1,25 @@
+# Development files (not needed in published package)
+.git/
+.github/
+.vscode/
+.idea/
+
+# Documentation
+WPSiteProcess.md
+
+# Test files
+*.test.js
+__tests__/
+coverage/
+
+# Development config
+.eslintrc*
+.prettierrc*
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
