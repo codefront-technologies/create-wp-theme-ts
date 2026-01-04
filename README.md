@@ -33,6 +33,7 @@ npx create-wp-theme-ts
 ```
 
 You'll be prompted for:
+
 - Project name
 - WordPress theme name
 - Author name
@@ -45,6 +46,7 @@ npx create-wp-theme-ts <project-name> [options]
 ```
 
 **Options:**
+
 - `--skip-install` - Skip automatic npm install
 - `--skip-git` - Skip git repository initialization
 
@@ -123,11 +125,13 @@ Preview the production build locally before deploying.
 ## Deploying to WordPress
 
 1. Run the production build:
+
    ```bash
    npm run build:prod
    ```
 
 2. Locate the generated zip file:
+
    ```
    dist/wordpress-custom-theme.zip
    ```
@@ -143,6 +147,7 @@ Preview the production build locally before deploying.
 ### Adding New Pages
 
 1. Create a new component in `src/pages/`:
+
    ```tsx
    // src/pages/Contact.tsx
    function Contact() {
@@ -152,11 +157,12 @@ Preview the production build locally before deploying.
    ```
 
 2. Add the route in `src/App.tsx`:
+
    ```tsx
    import Contact from './pages/Contact';
-   
+
    // Inside Routes:
-   <Route path="contact" element={<Contact />} />
+   <Route path="contact" element={<Contact />} />;
    ```
 
 3. Add navigation link in `src/components/Layout.tsx`:
@@ -178,7 +184,7 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  
+
   &:hover {
     background: #3a8eef;
   }
@@ -195,6 +201,7 @@ VITE_APP_TITLE=My Site
 ```
 
 Access them in your code:
+
 ```tsx
 const apiUrl = import.meta.env.VITE_API_URL;
 ```
@@ -236,6 +243,14 @@ register_nav_menus(array(
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Testing
+
+Navigate to desired location for the created project and run the following command.
+
+```
+node "create-wp-theme-ts\bin\index.js" <name-of-template-folder>
+```
 
 ## License
 

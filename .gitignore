@@ -20,3 +20,6 @@ npm-debug.log*
 
 # Test output
 coverage/
+
+# Test files
+test.txt

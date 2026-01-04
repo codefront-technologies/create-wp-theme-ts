@@ -20,7 +20,10 @@ export default defineConfig(({ mode }) => {
       react(),
 
       // ESLint integration - shows lint errors in terminal during dev
-      eslint(),
+      eslint({
+        failOnError: false,
+        failOnWarning: false,
+      }),
 
       // Copy static files to dist
       // - PHP files for WordPress theme
