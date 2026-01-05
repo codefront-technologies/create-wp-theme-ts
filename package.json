@@ -1,11 +1,11 @@
 {
-  "name": "create-wp-theme-ts",
+  "name": "create-wordpress-theme-ts",
   "version": "1.0.0",
   "description": "CLI tool to scaffold a WordPress theme powered by React, TypeScript, and Vite",
   "type": "module",
   "main": "index.js",
   "bin": {
-    "create-wp-theme-ts": "./bin/index.js"
+    "create-wordpress-theme-ts": "./bin/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
