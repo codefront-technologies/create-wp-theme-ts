@@ -7,7 +7,7 @@ import ora from 'ora';
 import fs from 'fs-extra';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { execSync } from 'child_process';
+import { execSync, spawn } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -187,7 +187,21 @@ program
         'Installing dependencies (this may take a few minutes)...'
       ).start();
       try {
-        execSync('npm install', { cwd: targetDir, stdio: 'ignore' });
+        await new Promise((resolve, reject) => {
+          const npmInstall = spawn('npm install', {
+            cwd: targetDir,
+            stdio: 'ignore',
+            shell: true,
+          });
+          npmInstall.on('close', (code) => {
+            if (code === 0) {
+              resolve();
+            } else {
+              reject(new Error(`npm install exited with code ${code}`));
+            }
+          });
+          npmInstall.on('error', reject);
+        });
         installSpinner.succeed('Dependencies installed');
       } catch (error) {
         installSpinner.fail('Failed to install dependencies');
