@@ -1,20 +1,39 @@
 {
   "compilerOptions": {
+    // Determines how modules are resolved. "bundler" is optimized for modern bundlers like Vite.
     "moduleResolution": "bundler",
+    // Allows importing TypeScript files with their .ts extension explicitly.
+    "allowImportingTsExtensions": true,
+    // Do not emit output files (bundler handles this).
+    "noEmit": true,
+    // Specifies the JSX factory function to use when targeting React JSX.
     "jsx": "react-jsx",
-    "target": "ES2020",
-    "module": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "types": ["vite/client", "node"],
+    // Specifies the target ECMAScript version.
+    "target": "es5",
+    // Specifies the module code generation.
+    "module": "esnext",
+    // Include Vite client types for import.meta.env
+    "types": ["vite/client"],
+    // Specifies the library files to be included in the compilation.
+    "lib": [
+      "dom", // Include DOM library.
+      "dom.iterable", // Include DOM iterable library.
+      "esnext" // Include latest ECMAScript features.
+    ],
+    // Allow JavaScript files to be compiled.
     "allowJs": true,
+    // Skip type checking of declaration files.
     "skipLibCheck": true,
+    // Enables interoperability between CommonJS and ES Modules.
     "esModuleInterop": true,
+    // Allow default imports from modules with no default export.
     "allowSyntheticDefaultImports": true,
+    // Enable all strict type-checking options.
     "strict": true,
+    // Ensure consistent casing in file names.
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "isolatedModules": true,
-    "noEmit": true
+    // Report errors for fallthrough cases in switch statements.
+    "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["src", "vite.config.ts", "vite-env.d.ts"]
 }

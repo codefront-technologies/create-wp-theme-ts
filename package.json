@@ -1,6 +1,6 @@
 {
   "name": "create-wordpress-theme-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI tool to scaffold a WordPress theme powered by React, TypeScript, and Vite",
   "type": "module",
   "main": "index.js",

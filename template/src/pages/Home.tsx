@@ -17,7 +17,7 @@ const Title = styled.h1`
   font-size: 3rem;
   color: #1a1a2e;
   margin-bottom: 1rem;
-  
+
   @media (max-width: 768px) {
     font-size: 2rem;
   }
@@ -43,8 +43,10 @@ const FeatureCard = styled.div`
   padding: 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -77,7 +79,7 @@ const CTAButton = styled.a`
   text-decoration: none;
   font-weight: 600;
   transition: background 0.2s ease;
-  
+
   &:hover {
     background: #3a8eef;
   }
@@ -89,12 +91,12 @@ function Home() {
       <Hero>
         <Title>Welcome to Your New Site</Title>
         <Subtitle>
-          A modern WordPress theme powered by React, TypeScript, and Vite.
-          Fast, flexible, and ready for customization.
+          A modern WordPress theme powered by React, TypeScript, and Vite. Fast, flexible, and ready
+          for customization.
         </Subtitle>
         <CTAButton href="#features">Explore Features</CTAButton>
       </Hero>
-      
+
       <FeatureGrid id="features">
         <FeatureCard>
           <IconWrapper>
@@ -105,7 +107,7 @@ function Home() {
             Built with Vite for instant hot module replacement and optimized production builds.
           </FeatureDescription>
         </FeatureCard>
-        
+
         <FeatureCard>
           <IconWrapper>
             <FontAwesomeIcon icon={faCode} />
@@ -115,7 +117,7 @@ function Home() {
             React 18, TypeScript, and styled-components for a great developer experience.
           </FeatureDescription>
         </FeatureCard>
-        
+
         <FeatureCard>
           <IconWrapper>
             <FontAwesomeIcon icon={faGlobe} />

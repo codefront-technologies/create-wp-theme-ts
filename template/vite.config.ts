@@ -1,109 +1,66 @@
-import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
-import eslint from 'vite-plugin-eslint';
+import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import zipPack from 'vite-plugin-zip-pack';
+import eslint from 'vite-plugin-eslint2';
+import { resolve } from 'path';
 
-/**
- * Vite Configuration for WordPress React Theme
- */
-export default defineConfig(({ mode }) => {
-  // Load env file based on `mode` (.env, .env.development, .env.production)
-  const env = loadEnv(mode, process.cwd(), '');
+// Generate timestamp suffix (YYYYMMDDHHmmss)
+const timestamp = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
 
-  return {
-    // ========================================
-    // PLUGINS
-    // ========================================
-    plugins: [
-      // React support with Fast Refresh for HMR
-      react(),
-
-      // ESLint integration - shows lint errors in terminal during dev
-      eslint({
-        failOnError: false,
-        failOnWarning: false,
-      }),
-
-      // Copy static files to dist
-      // - PHP files for WordPress theme
-      // - WordPress theme style.css (with required header)
-      // - Images from public folder
-      viteStaticCopy({
-        targets: [
-          {
-            src: 'php/*',
-            dest: '',
-          },
-          {
-            src: 'public/style.css',
-            dest: '',
-          },
-          {
-            src: 'public/images/*',
-            dest: 'images',
-          },
-        ],
-      }),
-
-      // Create WordPress theme zip after build
-      zipPack({
-        inDir: 'dist',
-        outDir: 'dist',
-        outFileName: 'wordpress-custom-theme.zip',
-      }),
-    ],
-
-    // Static assets directory (favicon, images, etc.)
-    publicDir: 'public',
-
-    // ========================================
-    // BUILD OPTIONS
-    // ========================================
-    build: {
+export default defineConfig(({ mode }) => ({
+  plugins: [
+    react(),
+    eslint({
+      emitWarning: true,
+      emitError: true,
+    }),
+    // Copy PHP files, style.css and favicon to dist root
+    viteStaticCopy({
+      targets: [
+        { src: 'php/*', dest: '.' },
+        { src: 'public/style.css', dest: '.' },
+        { src: 'public/assets/icons/favicon.ico', dest: '.' },
+      ],
+    }),
+    // Create ZIP file of the dist folder
+    zipPack({
       outDir: 'dist',
-      emptyOutDir: true,
-
-      // Source maps: inline for dev debugging, disabled for production
-      sourcemap: mode === 'development' ? 'inline' : false,
-
-      // Target modern browsers
-      target: 'esnext',
-
-      // Rollup output configuration
-      rollupOptions: {
-        output: {
-          // Fixed filenames for WordPress compatibility (no hashes)
-          // WordPress functions.php expects bundle.js and bundle.css
-          // style.css is reserved for WordPress theme header
-          entryFileNames: 'bundle.js',
-          chunkFileNames: '[name].js',
-          assetFileNames: (assetInfo) => {
-            if (assetInfo.name?.endsWith('.css')) {
-              return 'bundle.css';
-            }
-            return 'assets/[name][extname]';
-          },
+      outFileName: `wordpress-custom-theme-${timestamp}.zip`,
+    }),
+  ],
+  root: '.', // Root directory where index.html is located
+  publicDir: false, // Disable Vite's default public dir copying since we're using viteStaticCopy
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    sourcemap: mode === 'production', // Generate source maps for production
+    rollupOptions: {
+      input: resolve(__dirname, 'index.html'),
+      output: {
+        format: 'iife', // Output as IIFE format for browser compatibility (no ES module exports)
+        entryFileNames: 'bundle.js', // Name the main bundle 'bundle.js' since required by WordPress themes
+        chunkFileNames: '[name].js', // For any code-split chunks (if any)
+        // For assets like images, fonts
+        assetFileNames: (assetInfo) => {
+          // Keep CSS as style.css
+          const name = assetInfo.names?.[0] || '';
+          if (name.endsWith('.css')) {
+            return 'style.css';
+          }
+          return 'assets/[name][extname]';
         },
       },
     },
-
-    // ========================================
-    // DEV SERVER
-    // ========================================
-    server: {
-      port: 8080,
-      open: true, // Auto-open browser on start
-    },
-
-    // Preview server (for testing production builds locally)
-    preview: {
-      port: 8080,
-    },
-
-    // Polyfill process.env for libraries that expect Node.js environment
-    define: {
-      'process.env': {},
-    },
-  };
-});
+    minify: mode === 'production' ? 'terser' : false, // Minify in production
+  },
+  // Development server configuration
+  server: {
+    port: 8080,
+    open: true,
+  },
+  // Module resolution configuration
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
+}));

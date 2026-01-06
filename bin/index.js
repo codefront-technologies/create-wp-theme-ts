@@ -14,6 +14,36 @@ const __dirname = path.dirname(__filename);
 
 const TEMPLATE_DIR = path.join(__dirname, '..', 'template');
 
+// Files and directories to ignore when copying the template
+const IGNORED_PATTERNS = [
+  'node_modules',
+  '.git',
+  'dist',
+  '.DS_Store',
+  'Thumbs.db',
+  '*.log',
+  '.eslintcache',
+];
+
+// Filter function to exclude ignored files/directories
+function shouldCopyFile(src) {
+  const basename = path.basename(src);
+
+  for (const pattern of IGNORED_PATTERNS) {
+    // Handle glob patterns with *
+    if (pattern.includes('*')) {
+      const regex = new RegExp('^' + pattern.replace(/\./g, '\\.').replace(/\*/g, '.*') + '$');
+      if (regex.test(basename)) {
+        return false;
+      }
+    } else if (basename === pattern) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 program
   .name('create-wp-theme-ts')
   .description('Create a new WordPress theme powered by React, TypeScript, and Vite')
@@ -90,7 +120,7 @@ program
     // Copy template files
     const copySpinner = ora('Creating project structure...').start();
     try {
-      await fs.copy(TEMPLATE_DIR, targetDir);
+      await fs.copy(TEMPLATE_DIR, targetDir, { filter: shouldCopyFile });
       copySpinner.succeed('Project structure created');
     } catch (error) {
       copySpinner.fail('Failed to create project structure');
@@ -153,13 +183,17 @@ program
 
     // Install dependencies
     if (!options.skipInstall) {
-      const installSpinner = ora('Installing dependencies (this may take a few minutes)...').start();
+      const installSpinner = ora(
+        'Installing dependencies (this may take a few minutes)...'
+      ).start();
       try {
         execSync('npm install', { cwd: targetDir, stdio: 'ignore' });
         installSpinner.succeed('Dependencies installed');
       } catch (error) {
         installSpinner.fail('Failed to install dependencies');
-        console.log(chalk.yellow('\nYou can install dependencies manually by running: npm install\n'));
+        console.log(
+          chalk.yellow('\nYou can install dependencies manually by running: npm install\n')
+        );
       }
     }
 
@@ -172,8 +206,12 @@ program
     }
     console.log(chalk.cyan('  npm run dev         # Start development server'));
     console.log(chalk.cyan('  npm run build:prod  # Build for production\n'));
-    console.log(chalk.gray('The production build creates a WordPress theme zip file in the dist/ folder.'));
-    console.log(chalk.gray('Upload it via WordPress Admin > Appearance > Themes > Add New > Upload Theme\n'));
+    console.log(
+      chalk.gray('The production build creates a WordPress theme zip file in the dist/ folder.')
+    );
+    console.log(
+      chalk.gray('Upload it via WordPress Admin > Appearance > Themes > Add New > Upload Theme\n')
+    );
   });
 
 program.parse();

@@ -35,7 +35,7 @@ const HomeLink = styled(Link)`
   text-decoration: none;
   font-weight: 600;
   transition: background 0.2s ease;
-  
+
   &:hover {
     background: #3a8eef;
   }
@@ -46,9 +46,7 @@ function NotFound() {
     <Container>
       <ErrorCode>404</ErrorCode>
       <Title>Page Not Found</Title>
-      <Description>
-        Sorry, we couldn't find the page you're looking for.
-      </Description>
+      <Description>Sorry, we couldn&apos;t find the page you&apos;re looking for.</Description>
       <HomeLink to="/">Go Home</HomeLink>
     </Container>
   );
