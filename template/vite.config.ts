@@ -35,6 +35,7 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     emptyOutDir: true,
     sourcemap: mode === 'production', // Generate source maps for production
+    cssCodeSplit: false, // Extract all CSS into a single file
     rollupOptions: {
       input: resolve(__dirname, 'index.html'),
       output: {
@@ -43,10 +44,10 @@ export default defineConfig(({ mode }) => ({
         chunkFileNames: '[name].js', // For any code-split chunks (if any)
         // For assets like images, fonts
         assetFileNames: (assetInfo) => {
-          // Keep CSS as style.css
+          // Output bundled CSS as bundle.css (separate from WordPress theme's style.css)
           const name = assetInfo.names?.[0] || '';
           if (name.endsWith('.css')) {
-            return 'style.css';
+            return 'bundle.css';
           }
           return 'assets/[name][extname]';
         },
