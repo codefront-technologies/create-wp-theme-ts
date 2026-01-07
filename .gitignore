@@ -81,3 +81,4 @@ webpack.config.js
 .env.development
 .env.production
 test.txt
+ProductDetails.md
